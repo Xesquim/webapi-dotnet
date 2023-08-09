@@ -1,22 +1,22 @@
 ﻿namespace SmartSchool.WebAPI.Models
 {
-    public class AlunoDisciplina
+    public class AlunoCurso
     {
         public int AlunoId { get; set; }
-        public int DisciplinaId { get; set; }
+        public int CursoId { get; set; }
         public DateTime DataInicio { get; set; } = DateTime.Now;
         public DateTime? DataConclusao { get; set; } = null;
         public int? Nota { get; set; } = null;
         public virtual Aluno Aluno { get; set; }
-        public virtual Disciplina Disciplina { get; set; }
-        public AlunoDisciplina()
+        public virtual Curso Curso{ get; set; }
+        public AlunoCurso()
         {
             
         }
-        public AlunoDisciplina(int alunoId, int disciplinaId)
+        public AlunoCurso(int alunoId, int cursoId)
         {
             AlunoId = alunoId;
-            DisciplinaId = disciplinaId;
+            CursoId = cursoId;
         }
 
     }

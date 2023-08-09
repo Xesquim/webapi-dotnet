@@ -1,4 +1,7 @@
-﻿namespace SmartSchool.WebAPI
+﻿using Microsoft.EntityFrameworkCore;
+using SmartSchool.WebAPI.Data;
+
+namespace SmartSchool.WebAPI
 {
     public class Startup
     {
@@ -12,7 +15,19 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddDbContext<SmartContext>(
+                context => context.UseSqlServer(Configuration.GetConnectionString("default"))
+            );
+
+            services.AddControllers()
+                    .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling =
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IAlunoRepository, AlunoRepository>();
+            services.AddScoped<IProfessorRepository, ProfessorRepository>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
